@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+
+.po-text-obs-color-red{
+
+  color: #ED1C24;
+
+}
+
+.po-text-obs-color-gray{
+
+  color: #DEE1E6
+
+}
+
+.po-info-modal
+{
+
+  margin-bottom: 1rem;
+
+}

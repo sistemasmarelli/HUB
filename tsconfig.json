@@ -1,0 +1,41 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",        
+    "strict": false,
+    "noImplicitOverride": false,
+    "noPropertyAccessFromIndexSignature": false,
+    "noImplicitReturns": false,
+    "noFallthroughCasesInSwitch": false,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "resolveJsonModule": true, /* Permite importar arquivos JSON */
+    "allowSyntheticDefaultImports": true, /* Permite importações sintéticas de módulos */
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "ES2022",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,        
+    "strictInputAccessModifiers": false,
+    "strictTemplates": true,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true,
+  }
+}

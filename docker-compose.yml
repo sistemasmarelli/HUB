@@ -1,0 +1,20 @@
+services:
+  mor-portal-de-fornecedores:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: MOR-portal-de-fornecedores
+    working_dir: /app
+    volumes:
+      - C:\Workspace\TOTVS\MOR\Portal_de_Fornecedores:/app
+      - mor-portal-de-fornecedores:/app/node_modules
+    ports:
+      - "4204:4204"
+    command: bash
+    stdin_open: true
+    tty: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+volumes:
+  mor-portal-de-fornecedores:
+

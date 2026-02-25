@@ -1,0 +1,107 @@
+<!-- 
+  [p-quick-search-width]="quickSearchWidth"
+  [p-hide-close-disclaimers]="hideCloseDisclaimers"
+  [p-load]="onLoadFields.bind(this)"
+  [p-filters]="filters"
+  [p-hide-remove-all-disclaimer]="hideRemoveAllDisclaimer"
+  (p-change-disclaimers)="onChangeDisclaimers($event)"
+  (p-quick-search)="onQuickSearch($event)"
+  (p-advanced-search)="onAdvancedSearch($event)" -->
+
+<po-page-dynamic-search 
+  [p-title]="title"
+  [p-literals]="literals"
+  (p-quick-search)="getPendProd($event)"
+>
+
+<!--
+<po-page-default p-title="Marelli - Pendências de Produção">
+  -->
+  <!-- Altura do container principal preenchendo a viewport -->
+  <po-container [p-height]="containerHeight">
+    <div class="layout-row">  
+      <!-- COLUNA ESQUERDA -->
+       
+      <div class="po-md-3 charts-column">
+        <po-container 
+            [p-height]="tableHeightGraph"
+            [p-no-border]=true>
+
+           <div >
+            <!--<div [style.height.px]="tableHeightGraphInt">-->
+
+                <strong class="po-md-12" style="display:block; text-align:center; font-size: 25px">
+                Produzido
+                </strong>
+
+                <po-chart
+                class="po-md-12"
+                [p-series]="dadosChart1"
+                [p-height]="tableHeightGraphInt / 100 * 75"
+                >
+                </po-chart>
+
+                <strong class="po-md-12" style="display:block; text-align:center;">
+                Total: {{ total1 }} peças
+                </strong>
+
+            <!--</div>-->
+            </div>
+
+            <po-divider></po-divider>
+
+            <div >
+            <!--<div [style.height.px]="tableHeightGraphInt">-->
+                <strong class="po-md-12" style="display:block; text-align:center; font-size: 25px">
+                Pendências
+                </strong>
+
+                <po-chart
+                class="po-md-12"
+                [p-series]="dadosChart2"
+                [p-height]="tableHeightGraphInt / 100 * 75"
+                >
+                </po-chart>
+
+                <strong class="po-md-12" style="display:block; text-align:center;">
+                Total: {{ total2 }} peças
+                </strong>
+            </div>
+        </po-container>
+      </div>
+    
+
+      <!-- COLUNA DIREITA -->
+      <div class="po-md-9 right-column">
+        <strong class="po-md-12 section-title" style="display:block; text-align:center; font-size: 30px">
+          A Produzir
+        </strong>
+
+       
+        <div #tableScroll class="table-scroll">
+          <po-table
+            [p-columns]="colunasPendProd"
+            [p-loading]="carregandoPendProd"
+            [p-items]="dadosPendProd"
+            [p-literals]="configuracaoPendProd"
+            p-striped="true"
+            [p-text-wrap]="true"
+            [p-show-more-disabled]="disableShowMoreButton"
+            [p-actions-right]="true"
+            p-sort="true"
+            [p-height]="tableHeight">
+          </po-table>
+
+          <po-button
+            [p-label]="isPaused ? 'Pausar' : 'Retomar'"
+            (p-click)="togglePause()">
+          </po-button>
+
+
+        </div>
+      </div>
+    </div>
+  </po-container>
+<!--</po-page-default>-->
+</po-page-dynamic-search>
+

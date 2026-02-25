@@ -1,0 +1,30 @@
+<!--
+<div style="display: inline-block; position: relative; width: 100%;" (keydown.enter)="handleKeyboardEvent($event)">
+  <img [src]="imagemFundo" [ngStyle]="{'height': alturaImagemFundo}" style=" pointer-events: none; position: absolute;  width: 100%; z-index: -1;">
+  <span class="po-xl-12 po-lg-12 po-md-12 po-sm-12">V: 2.1</span>
+  <po-container p-no-shadow="true" class="po-mt-5 po-sm-12 po-md-6 po-lg-4 po-xl-4  po-offset-md-3 po-offset-lg-4 po-offset-xl-4" style="height: 90vh;">
+    <div style="background-color: white;" class="po-p-2">
+      <img src="assets/logo.png" class="po-lg-12">
+      <po-login name="loginUsuario" [(ngModel)]="loginUsuario" p-icon="po-icon-company" p-mask="99.999.999/9999-99" p-required ngDefaultControl [p-no-autocomplete]="false">
+      </po-login>
+      <po-password name="senhaUsuario" [(ngModel)]="senhaUsuario" p-required ngDefaultControl>
+      </po-password>
+      <div class="po-row">
+        <po-button class="po-sm-12" p-label="Acessar" p-kind="primary" (p-click)="onClickAcessar()">
+        </po-button>
+      </div>
+    </div>
+  </po-container>
+</div>
+<span class="po-sm-12">V: 1.0</span>
+-->
+<po-page-login
+  [p-languages]="[]"
+  [p-hide-remember-user]="true"
+   p-logo="assets/logo.jpg"
+  (p-login-submit)="onClickAcessar($event)"
+  [p-literals]="{ welcome: 'Bem-vindo', loginPlaceholder: 'Insira seu usuário'}">
+</po-page-login
+>
+
+<!--p-secondary-logo="assets/logo.png"-->
