@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,10 @@ import { Observable } from 'rxjs';
 export class AuthHttpService {
   authHeaders: HttpHeaders;
   userAuthData;
+
+  private autenticadoSubject = new BehaviorSubject<boolean>(false);
+  autenticado$ = this.autenticadoSubject.asObservable();
+  
   constructor(private httpClient: HttpClient) {}
 
   login(usuario: string, senha: string): Observable<any> {
@@ -41,12 +45,39 @@ export class AuthHttpService {
       headers: this.authHeaders
     };
 
-    return this.httpClient.get(environment.apiProgress + 'login', {
+   /* return this.httpClient.get(environment.apiProgress + 'login', {
       ...options,
     //  responseType: 'text'
 
-    });
+    });*/
+
+    return this.httpClient
+      .get(environment.apiProgress + 'login', { ...options })
+      .pipe(
+        tap(() => {
+          // Se chegou aqui, a API respondeu 200 OK
+          this.autenticadoSubject.next(true);
+        }),
+        catchError(err => {
+          this.autenticadoSubject.next(false);
+          return throwError(() => err);
+        })
+      );    
+    }
+
+
+  isAuthenticated(): boolean {
+    return this.autenticadoSubject.value;
   }
 
+   /** Chame no logout */
+  logout(): void {
+    this.setAuthenticated(false);
+  }
+
+  private setAuthenticated(value: boolean): void {
+    this.autenticadoSubject.next(value);
+    //localStorage.setItem(this.storageKey, value ? 'true' : 'false');
+  }    
 
 }

@@ -62,6 +62,7 @@ export class PendProdComponent implements OnInit {
   public scrollStep: number = 10;
   public titleBase: string = "Marelli - Pendências de Produção";
   public title: string = this.titleBase;
+  public dataHoraExec: string = '';
 
   private poNotification = inject(PoNotificationService);
   private tableObserver?: ResizeObserver;
@@ -100,7 +101,7 @@ export class PendProdComponent implements OnInit {
     { property: 'dtFimProd'      ,    label: 'Dt Fim Prod' , type: 'date'}
   ];
 
-  dadosPendProd: Array<Record<string, unknown>> ;
+  dadosPendProd: Array<Record<string, unknown>> = [];
   dadosChart1  : Array<PoChartSerie> = [];
   dadosChart2  : Array<PoChartSerie> = [];
   configuracaoPendProd: PoTableLiterals = {
@@ -200,6 +201,7 @@ export class PendProdComponent implements OnInit {
       this.intervalCarga = setInterval(() => {
         this.getPendProd(this.filtro);}, 
         300000);
+        
       });
 
 
@@ -262,7 +264,7 @@ export class PendProdComponent implements OnInit {
     this.containerHeight = Math.max(200, Math.floor(available));
 
     // Ajusta tanho dos demais componentes
-    this.tableHeight= this.containerHeight - 160;
+    this.tableHeight= this.containerHeight - 175;
     this.tableHeightGraph = this.containerHeight - 20;
     this.tableHeightGraphInt = this.tableHeightGraph / 2;
     
@@ -292,9 +294,14 @@ export class PendProdComponent implements OnInit {
   
   getPendProd(filter) {
 
+    this.filtro = filter;
+
     this.carregandoPendProd = true;
     this.searchFilters = '';
     this.numeroPaginaPesquisaPrincipal = 1;
+
+    let dataExec = new Date();
+    this.dataHoraExec = `${dataExec.getDate().toString().padStart(2, '0')}/${(dataExec.getMonth() + 1).toString().padStart(2, '0')}/${dataExec.getFullYear()} ${dataExec.getHours().toString().padStart(2, '0')}:${dataExec.getMinutes().toString().padStart(2, '0')}`;
 
     //if  (this.dt_emissao != null && this.dt_vencimento != null) {
         this.pendProdHttpService.buscaPendProd(filter).subscribe(
@@ -303,13 +310,14 @@ export class PendProdComponent implements OnInit {
 
           this.dadosPendProd = [];
 
-          console.log("Res: ", res)
           if (res.items[0].coderro != undefined) {
               this.poNotification.error(res.items[0].coderro + ': ' + res.items[0].mensagem);
           } else {
 
-              console.log('res: ', res)
-              this.dadosPendProd = res.items[0].items;
+              //this.dadosPendProd = res.items[0].items;
+              this.dadosPendProd = Array.isArray(res?.items?.[0]?.items)
+                  ? res.items[0].items
+                  : [];
 
               const emAtraso  = res.items[0].chart1[0].emAtraso;
               const emDia     = res.items[0].chart1[0].emDia;
@@ -345,6 +353,7 @@ export class PendProdComponent implements OnInit {
           this.recalcContainerHeight();
 
           this.carregandoPendProd = false;
+
         },
         (error) => {
             this.dadosPendProd = [];

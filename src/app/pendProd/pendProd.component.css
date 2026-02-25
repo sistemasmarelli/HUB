@@ -1,0 +1,9 @@
+.ultimaatualizacao {
+
+  display: flex;
+  flex-direction: column;
+  /*padding: 2px;*/
+  margin-bottom: 10px;
+  font-weight: bold;
+
+}
